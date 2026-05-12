@@ -1,13 +1,20 @@
-# fuz_template
+# mistajabba.github.io
 
-> SvelteKit starter template with full fuz stack integration
+> personal website
 
-fuz_template (`@fuzdev/fuz_template`) is a production-ready starter template for
-building static web applications with the fuz stack. Clone it to start new
-projects with TypeScript, Svelte 5, SvelteKit, and the complete fuz ecosystem
-pre-configured.
+Personal site for [mistajabba](https://github.com/mistajabba), deployed as a
+static SvelteKit app to GitHub Pages at <https://mistajabba.github.io/>.
 
-For coding conventions, see Skill(fuz-stack).
+Cloned from [`fuz_template`](https://github.com/fuzdev/fuz_template) and stripped
+to a minimal starting point. No custom domain — uses the GitHub Pages default
+host (the upstream `static/CNAME` has been removed).
+
+## Local development resources
+
+**Both of these are available locally — use them.**
+
+- **`Skill(fuz-stack)`** is **installed** at `~/.claude/skills/fuz-stack` (symlinked from `~/dev/fuz_docs/skills/fuz-stack/`). It is the authoritative reference for coding conventions, naming, file organization, testing, styling, TSDoc, Svelte 5 patterns, the Result type, Gro tasks, and everything else fuz-stack-flavored. Consult it before writing or reviewing code in this project.
+- **`fuz_css` full source** is **cloned locally** at `~/dev/fuz_css/` (i.e. `../../fuz_css/` relative to this file) — read the actual CSS framework / design-system source directly (utility classes, design tokens, theming) instead of guessing. Treat it as a core reference, not just a dependency.
 
 ## Gro commands
 
@@ -16,177 +23,96 @@ gro check     # typecheck, test, lint, format check (run before committing)
 gro typecheck # typecheck only (faster iteration)
 gro test      # run tests with vitest
 gro gen       # regenerate .gen files (library.json, fuz.css)
+gro sync      # regenerate files and run svelte-kit sync
 gro build     # build for production (static adapter)
 gro deploy    # build, commit, and push to deploy branch
-gro sync      # regenerate files and run svelte-kit sync
 ```
 
-IMPORTANT for AI agents: Do NOT run `gro dev` - the developer will manage the
-dev server.
+`npm run dev`, `npm run build`, `npm run deploy` are thin wrappers around the
+matching `gro` tasks (see `package.json`).
 
-## Key dependencies
+**Always call `gro` directly — never `npx gro`.** `gro` is installed globally
+on this machine, so the bare command works; prefixing with `npx` resolves to a
+different / unintended binary.
 
-- Svelte 5 - component framework with runes
-- SvelteKit - application framework with static adapter
-- Vite - build tool
-- fuz_css (@fuzdev/fuz_css) - CSS framework and design system
-- fuz_ui (@fuzdev/fuz_ui) - UI components, theming, docs system
-- fuz_util (@fuzdev/fuz_util) - utility functions
-- fuz_code (@fuzdev/fuz_code) - syntax highlighting
-- Gro (@fuzdev/gro) - build system and task runner
+Running `gro dev` is fine when the user asks for it. If you start it yourself,
+do so in the background so you can keep working (and don't start a second
+instance if one is already running).
 
-## Scope
+## Stack
 
-fuz_template is a **SvelteKit starter template**:
+- Svelte 5 (runes mode) + SvelteKit with `@sveltejs/adapter-static`
+- Vite build, vitest for tests
+- fuz_css (CSS framework / design system), fuz_ui (components + theming),
+  fuz_util
+- Gro for tasks, codegen, and deploy
+- Node >= 22.15, TypeScript strict, Prettier with tabs + 100-char width
 
-- Pre-configured fuz stack (fuz_css, fuz_ui, fuz_util, fuz_code)
-- Dark/light theme with persistence
-- Documentation system with API generation
-- Static deployment ready (GitHub Pages, Netlify)
+## Current state
 
-### What fuz_template does NOT include
+The site is in **early scaffold** — just two routes with placeholder content:
 
-- Authentication or user management
-- Database or backend
-- Dynamic server-side content
-- Production-ready components (demos only)
+- `src/routes/+page.svelte` — home, single link to `/about`
+- `src/routes/about/+page.svelte` — back-link to home, no content yet
 
-## Using the template
-
-Clone with degit or use GitHub's "Use this template" button:
-
-```bash
-npx degit fuzdev/fuz_template myproject
-cd myproject
-npm i
-```
-
-**Files to customize:**
-
-- `package.json` - name, version, description, homepage, repository
-- `svelte.config.js` - update origin URL
-- `src/routes/+layout.svelte` - update `<title>`
-- `src/routes/+page.svelte` - replace demo content
-- `static/CNAME` - update or delete for your domain
-- `.github/FUNDING.yml` - update or delete
-
-## Architecture
+The upstream demo components (`Mreows.svelte`, `Positioned.svelte`) have been
+removed; `src/lib/` is currently empty.
 
 ### Directory structure
 
 ```
 src/
-├── app.html               # HTML entry with theme detection
-├── lib/                   # your library code
-│   ├── Mreows.svelte      # example component (replace me)
-│   └── Positioned.svelte  # example component (replace me)
+├── app.html             # HTML entry with pre-render theme detection
+├── lib/                 # (empty — components go here)
 └── routes/
-    ├── +layout.svelte     # root layout with fuz_css imports
-    ├── +layout.ts         # prerender: true, ssr: true
-    ├── +page.svelte       # home page
-    ├── style.css          # custom global styles
-    ├── fuz.css            # generated fuz_css styles
-    ├── library.gen.ts     # generates library.json
-    ├── library.ts         # exports library metadata
-    ├── library.json       # generated component metadata
-    ├── example.test.ts    # test file example
-    ├── about/+page.svelte
-    └── docs/              # documentation pages
-        ├── +layout.svelte # wraps docs in Docs component
-        ├── +page.svelte   # docs index
-        ├── tomes.ts       # documentation structure
-        ├── library/       # library details page
-        └── api/           # auto-generated API docs
+    ├── +layout.svelte   # root layout: ThemeRoot + fuz.css + style.css
+    ├── +layout.ts       # prerender: true, ssr: true
+    ├── +page.svelte     # home (placeholder)
+    ├── style.css        # custom global styles
+    ├── fuz.css          # generated by fuz.gen.css.ts
+    ├── fuz.gen.css.ts   # gro gen target for fuz.css
+    └── about/+page.svelte
 ```
-
-### Example components (replace these)
-
-The template includes demo components to show Svelte 5 patterns:
-
-**Mreows.svelte** - interactive emoji grid demo showing `$props()`,
-`$bindable()`, `$state()`, `$derived()`. Marked with "don't use this component".
-
-**Positioned.svelte** - CSS transform utility with Snippet children.
-
-Replace these with your actual components.
-
-### SvelteKit configuration
-
-- `+layout.ts` exports `prerender = true` and `ssr = true` for full static
-  generation
-- `svelte.config.js` enables runes mode and configures CSP via
-  `create_csp_directives()` from fuz_ui
-- Uses `@sveltejs/adapter-static` for static output
 
 ### Theme detection
 
-`app.html` includes theme detection that runs before render:
+`src/app.html` runs a small script before render that:
 
 1. Reads `localStorage.getItem('fuz:color-scheme')`
-2. Falls back to `matchMedia('(prefers-color-scheme:dark)')`
-3. Sets class on `<html>` element ('dark' or 'light')
+2. Falls back to `matchMedia('(prefers-color-scheme: dark)')`
+3. Sets `dark` / `light` class on `<html>`
 
-This prevents flash of wrong theme on page load.
+This prevents a flash of the wrong theme. The root layout wraps children in
+`ThemeRoot` (from `@fuzdev/fuz_ui`).
 
 ### Code generation
 
-**library.gen.ts** - generates component library metadata:
+`fuz.gen.css.ts` → `fuz.css`: fuz_css utility classes and tokens. Run `gro gen`
+(or `gro sync`) after upgrading `@fuzdev/fuz_css` or changing the generator.
 
-- Outputs `library.json` (component metadata, props, dependencies) and
-  `library.ts` (typed wrapper)
-- Powers auto-generated API docs at `/docs/api/`
+## Open decisions
 
-**fuz.gen.css.ts** - generates fuz_css utility classes:
+- **Assets** — `static/logo.svg` is still the fuz spider and `static/favicon.png`
+  is the fuz default. Replace when there's an actual brand.
+- **CSP** — `svelte.config.js` has a commented-out CSP block. Enable + configure
+  when the site has real content / external resources.
 
-- Outputs `fuz.css` with CSS custom properties and utility classes
+## Deployment
 
-### Documentation system
+`gro deploy` builds the static site and pushes to the `deploy` branch. GitHub
+Pages serves that branch at <https://mistajabba.github.io/>. `static/.nojekyll`
+disables Jekyll processing.
 
-Uses fuz_ui's tome system:
+## References
 
-- `docs/tomes.ts` - defines documentation pages
-- `docs/library/` - shows `LibraryDetail` component
-- `docs/api/` - auto-generated API docs from `library.json`
-- `docs/api/[...module_path]/` - dynamic module documentation
+Locally available (cloned / installed on this machine — read directly, don't guess):
 
-## Context system
+- [`fuz-stack` skill](../../../.claude/skills/fuz-stack/SKILL.md) — installed at `~/.claude/skills/fuz-stack` (symlink → `~/dev/fuz_docs/skills/fuz-stack/`). Authoritative for fuz-stack coding conventions, patterns, and references. See also the `references/` directory in the skill for deep-dives (async, css, svelte, testing, tsdoc, types, zod, etc.).
+- [`fuz_css`](../../fuz_css/CLAUDE.md) — full source cloned at `~/dev/fuz_css/`. Core reference for the CSS framework / design system (utility classes, tokens, theming).
+- [`fuz_docs`](../../fuz_docs/CLAUDE.md) — fuz ecosystem docs site, cloned at `~/dev/fuz_docs/`. Hosts the `fuz-stack` and `grimoire` skills.
 
-Uses contexts from fuz_ui:
+Upstream-only (linked for context, not cloned locally):
 
-- `library_context` - provides `Library` class for docs
-- `tomes_context` - provides documentation structure
-- Theme context via `ThemeRoot` component wrapper
-
-## Static deployment
-
-Pre-configured for static hosting (GitHub Pages, Netlify, etc.):
-
-- Uses `@sveltejs/adapter-static`
-- `static/CNAME` for custom domain
-- `static/.nojekyll` for GitHub Pages
-
-Deploy with `gro deploy` (builds and pushes to deploy branch).
-
-## Known limitations
-
-- **Demo components only** - Mreows and Positioned are examples, not for
-  production use
-- **Minimal test coverage** - Only one example test file included
-- **Static only** - No dynamic server-side content
-- **Tests colocated** - Tests in routes (`example.test.ts`) rather than
-  `src/test/` directory
-
-## Project standards
-
-- TypeScript strict mode
-- Svelte 5 with runes API
-- Prettier with tabs, 100 char width
-- Node >= 22.15
-- Private package (not published to npm)
-
-## Related projects
-
-- [`fuz_css`](../fuz_css/CLAUDE.md) - CSS framework
-- [`fuz_ui`](../fuz_ui/CLAUDE.md) - UI components and docs system
-- [`fuz_util`](../fuz_util/CLAUDE.md) - utility functions
-- [`fuz_blog`](../fuz_blog/CLAUDE.md) - extends template with blog features
+- `fuz_template` — the template this repo was cloned from ([github.com/fuzdev/fuz_template](https://github.com/fuzdev/fuz_template))
+- `fuz_ui` — UI components and docs system ([github.com/fuzdev/fuz_ui](https://github.com/fuzdev/fuz_ui))
+- `fuz_util` — utility functions ([github.com/fuzdev/fuz_util](https://github.com/fuzdev/fuz_util))

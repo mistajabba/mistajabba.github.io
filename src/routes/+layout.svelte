@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '$routes/fuz.css';
-	import '@fuzdev/fuz_code/theme.css';
 	import '$routes/style.css';
 
 	import ThemeRoot from '@fuzdev/fuz_ui/ThemeRoot.svelte';
@@ -14,7 +13,7 @@
 </script>
 
 <svelte:head>
-	<title>@fuzdev/fuz_template</title>
+	<title>mistajabba</title>
 </svelte:head>
 
 <ThemeRoot>
