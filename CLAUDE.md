@@ -1,118 +1,61 @@
-# mistajabba.github.io
+[← Back to Projects](../CLAUDE.md) | [README.md](README.md)
 
-> personal website
+# Website
 
-Personal site for [mistajabba](https://github.com/mistajabba), deployed as a
-static SvelteKit app to GitHub Pages at <https://mistajabba.github.io/>.
+Working reference for the personal website project.
 
-Cloned from [`fuz_template`](https://github.com/fuzdev/fuz_template) and stripped
-to a minimal starting point. No custom domain — uses the GitHub Pages default
-host (the upstream `static/CNAME` has been removed).
+## Purpose
 
-## Local development resources
+Build a thoughtful personal website that documents ideas, projects, and lessons around
+leadership, AI, business, strategy, and the outdoors. The site will eventually deploy to the
+existing `mistajabba.github.io` GitHub Pages domain.
 
-**Both of these are available locally — use them.**
+## Direction
 
-- **`Skill(fuz-stack)`** is **installed** at `~/.claude/skills/fuz-stack` (symlinked from `~/dev/fuz_docs/skills/fuz-stack/`). It is the authoritative reference for coding conventions, naming, file organization, testing, styling, TSDoc, Svelte 5 patterns, the Result type, Gro tasks, and everything else fuz-stack-flavored. Consult it before writing or reviewing code in this project.
-- **`fuz_css` full source** is **cloned locally** at `~/dev/fuz_css/` (i.e. `../../fuz_css/` relative to this file) — read the actual CSS framework / design-system source directly (utility classes, design tokens, theming) instead of guessing. Treat it as a core reference, not just a dependency.
+- Classic field-journal and National Park character
+- Understated, warm, thoughtful, and timeless
+- Reflects a background spanning military service, consulting, climbing, and AI strategy
+- Avoid flashy portfolio and modern startup conventions
+- Make the site lightweight and easy to expand over time
 
-## Gro commands
+## Visual system
 
-```bash
-gro check     # typecheck, test, lint, format check (run before committing)
-gro typecheck # typecheck only (faster iteration)
-gro test      # run tests with vitest
-gro gen       # regenerate .gen files (library.json, fuz.css)
-gro sync      # regenerate files and run svelte-kit sync
-gro build     # build for production (static adapter)
-gro deploy    # build, commit, and push to deploy branch
-```
+- Warm beige canvas: `#f3efe4`
+- Hunter green primary: `#2f4f3a`
+- Burgundy accent: `#5b2c2c`
+- Serif display type with a simple sans-serif body face
+- Generous whitespace, fine rules, paper texture, minimal fade-in motion
+- Responsive layouts for desktop and mobile
 
-`npm run dev`, `npm run build`, `npm run deploy` are thin wrappers around the
-matching `gro` tasks (see `package.json`).
+## Pages
 
-**Always call `gro` directly — never `npx gro`.** `gro` is installed globally
-on this machine, so the bare command works; prefixing with `npx` resolves to a
-different / unintended binary.
+- `index.html` — introduction, section cards, and recent notebook entries
+- `about.html` — biography, career timeline, skills, interests, and professional links
+- `notebook.html` — searchable and filterable article index
+- `projects.html` — active, research, prototype, and completed work
+- `library.html` — books, articles, podcasts, videos, and software
+- `contact.html` — email, LinkedIn, and GitHub contact paths
 
-Running `gro dev` is fine when the user asks for it. If you start it yourself,
-do so in the background so you can keep working (and don't start a second
-instance if one is already running).
+## Technical conventions
 
-## Stack
+- HTML, CSS, and vanilla JavaScript only
+- No backend, frameworks, build tooling, or runtime dependencies
+- Multi-page static site ready for GitHub Pages
+- Shared styles live in `css/styles.css`
+- Shared behavior lives in `js/main.js`
+- Every page uses the same navigation and footer structure
+- Mobile navigation must remain keyboard- and screen-reader-accessible
+- Dark mode follows system preference until explicitly set by the visitor
+- Respect `prefers-reduced-motion`
+- Keep placeholder content easy to identify and replace
+- Future notebook articles can be added as static HTML or generated from Markdown later
 
-- Svelte 5 (runes mode) + SvelteKit with `@sveltejs/adapter-static`
-- Vite build, vitest for tests
-- fuz_css (CSS framework / design system), fuz_ui (components + theming),
-  fuz_util
-- Gro for tasks, codegen, and deploy
-- Node >= 22.15, TypeScript strict, Prettier with tabs + 100-char width
+## Content status
 
-## Current state
+The biography, contact links, resume, articles, projects, and library items are thoughtful
+placeholders. Replace them with verified personal details before public launch.
 
-The site is in **early scaffold** — just two routes with placeholder content:
+## Reference implementation
 
-- `src/routes/+page.svelte` — home, single link to `/about`
-- `src/routes/about/+page.svelte` — back-link to home, no content yet
-
-The upstream demo components (`Mreows.svelte`, `Positioned.svelte`) have been
-removed; `src/lib/` is currently empty.
-
-### Directory structure
-
-```
-src/
-├── app.html             # HTML entry with pre-render theme detection
-├── lib/                 # (empty — components go here)
-└── routes/
-    ├── +layout.svelte   # root layout: ThemeRoot + fuz.css + style.css
-    ├── +layout.ts       # prerender: true, ssr: true
-    ├── +page.svelte     # home (placeholder)
-    ├── style.css        # custom global styles
-    ├── fuz.css          # generated by fuz.gen.css.ts
-    ├── fuz.gen.css.ts   # gro gen target for fuz.css
-    └── about/+page.svelte
-```
-
-### Theme detection
-
-`src/app.html` runs a small script before render that:
-
-1. Reads `localStorage.getItem('fuz:color-scheme')`
-2. Falls back to `matchMedia('(prefers-color-scheme: dark)')`
-3. Sets `dark` / `light` class on `<html>`
-
-This prevents a flash of the wrong theme. The root layout wraps children in
-`ThemeRoot` (from `@fuzdev/fuz_ui`).
-
-### Code generation
-
-`fuz.gen.css.ts` → `fuz.css`: fuz_css utility classes and tokens. Run `gro gen`
-(or `gro sync`) after upgrading `@fuzdev/fuz_css` or changing the generator.
-
-## Open decisions
-
-- **Assets** — `static/logo.svg` is still the fuz spider and `static/favicon.png`
-  is the fuz default. Replace when there's an actual brand.
-- **CSP** — `svelte.config.js` has a commented-out CSP block. Enable + configure
-  when the site has real content / external resources.
-
-## Deployment
-
-`gro deploy` builds the static site and pushes to the `deploy` branch. GitHub
-Pages serves that branch at <https://mistajabba.github.io/>. `static/.nojekyll`
-disables Jekyll processing.
-
-## References
-
-Locally available (cloned / installed on this machine — read directly, don't guess):
-
-- [`fuz-stack` skill](../../../.claude/skills/fuz-stack/SKILL.md) — installed at `~/.claude/skills/fuz-stack` (symlink → `~/dev/fuz_docs/skills/fuz-stack/`). Authoritative for fuz-stack coding conventions, patterns, and references. See also the `references/` directory in the skill for deep-dives (async, css, svelte, testing, tsdoc, types, zod, etc.).
-- [`fuz_css`](../../fuz_css/CLAUDE.md) — full source cloned at `~/dev/fuz_css/`. Core reference for the CSS framework / design system (utility classes, tokens, theming).
-- [`fuz_docs`](../../fuz_docs/CLAUDE.md) — fuz ecosystem docs site, cloned at `~/dev/fuz_docs/`. Hosts the `fuz-stack` and `grimoire` skills.
-
-Upstream-only (linked for context, not cloned locally):
-
-- `fuz_template` — the template this repo was cloned from ([github.com/fuzdev/fuz_template](https://github.com/fuzdev/fuz_template))
-- `fuz_ui` — UI components and docs system ([github.com/fuzdev/fuz_ui](https://github.com/fuzdev/fuz_ui))
-- `fuz_util` — utility functions ([github.com/fuzdev/fuz_util](https://github.com/fuzdev/fuz_util))
+Use `../mistajabba.github.io/` only as the reference for the established GitHub Pages domain
+and deployment context. This project intentionally uses a simpler static HTML architecture.

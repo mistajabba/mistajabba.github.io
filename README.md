@@ -1,32 +1,34 @@
-# mistajabba.github.io
+[← Back to Projects](../README.md) | [CLAUDE.md](CLAUDE.md)
 
-> personal website
+# Website
 
-Built with [SvelteKit](https://kit.svelte.dev/), [Svelte 5](https://svelte.dev/),
-and the [fuz stack](https://www.fuz.dev/)
-([fuz_css](https://github.com/fuzdev/fuz_css),
-[fuz_ui](https://github.com/fuzdev/fuz_ui),
-[fuz_util](https://github.com/fuzdev/fuz_util),
-[Gro](https://github.com/fuzdev/gro)).
-Cloned from [`fuz_template`](https://github.com/fuzdev/fuz_template).
+A lightweight, multi-page personal website built with semantic HTML, CSS, and vanilla
+JavaScript. Its visual language draws from field journals, trail maps, and classic National
+Park print design.
 
-## develop
+## Preview locally
+
+Open `index.html` directly, or serve the directory with any static file server:
 
 ```bash
-npm i
-npm run dev
+python3 -m http.server 8000
 ```
 
-## build
+Then visit <http://localhost:8000>.
 
-```bash
-npm run build
+## Structure
+
+```text
+website/
+├── css/styles.css
+├── images/
+├── js/main.js
+├── index.html
+├── about.html
+├── notebook.html
+├── projects.html
+├── library.html
+└── contact.html
 ```
 
-## deploy
-
-Deploys to GitHub Pages on the `deploy` branch:
-
-```bash
-npm run deploy
-```
+See [CLAUDE.md](CLAUDE.md) for the living project brief and editing conventions.
