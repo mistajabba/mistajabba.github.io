@@ -142,6 +142,7 @@ p { margin-top: 0; }
 .hero-kicker { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; color: var(--burgundy); font-size: 0.74rem; font-weight: 800; letter-spacing: 0.17em; text-transform: uppercase; }
 .hero-kicker::before { width: 52px; height: 1px; background: currentColor; content: ''; }
 .hero h1 span { display: block; color: var(--burgundy); font-size: 0.31em; font-style: italic; letter-spacing: 0; line-height: 1.5; }
+.hero-descriptor { margin: 0.75rem 0 0; color: var(--muted); font-size: 0.88rem; letter-spacing: 0.01em; }
 .hero-copy { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 8vw, 7rem); align-items: end; }
 .hero-copy p { max-width: 620px; margin: 0; color: var(--muted); font-size: 1.08rem; }
 .coordinates { justify-self: end; padding-left: 1.25rem; border-left: 1px solid var(--line); color: var(--muted); font-family: var(--serif); font-size: 0.82rem; font-style: italic; }
@@ -198,10 +199,13 @@ p { margin-top: 0; }
 .notebook-grid .entry-card[hidden] { display: none; }
 .empty-state { display: none; padding: 3rem; border: 1px dashed var(--line); color: var(--muted); text-align: center; }
 .empty-state.visible { display: block; }
+.notebook-grid article.entry-card::after { content: 'Coming soon'; position: absolute; right: 2rem; bottom: 1.5rem; color: var(--muted); font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; font-style: italic; }
 
 .project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
 .project-card { min-height: 290px; padding: 2rem; }
 .project-card p { color: var(--muted); }
+a.project-card { text-decoration: none; transition: transform 180ms ease, border-color 180ms ease; }
+a.project-card:hover { border-color: var(--burgundy); transform: translateY(-4px); }
 .status { display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 3.5rem; color: var(--burgundy); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.11em; text-transform: uppercase; }
 .status::before { width: 7px; height: 7px; border-radius: 50%; background: currentColor; content: ''; }
 .project-index { position: absolute; right: 1.75rem; bottom: 1.25rem; color: var(--line); font-family: var(--serif); font-size: 3rem; font-style: italic; }
@@ -214,7 +218,7 @@ p { margin-top: 0; }
 .resource-list strong { display: block; color: var(--green-dark); font-family: var(--serif); }
 .resource-list span { color: var(--muted); font-size: 0.86rem; }
 
-.contact-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; margin-top: 3rem; }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
 .contact-card { min-height: 200px; padding: 2rem; text-decoration: none; }
 .contact-card:hover { border-color: var(--burgundy); }
 .contact-card span { display: block; margin-bottom: 3rem; color: var(--burgundy); font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
