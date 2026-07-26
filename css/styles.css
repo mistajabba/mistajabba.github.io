@@ -36,8 +36,6 @@ html { scroll-behavior: smooth; }
 body {
 	margin: 0;
 	background-color: var(--paper);
-	background-image: radial-gradient(rgba(47, 79, 58, 0.055) 0.7px, transparent 0.7px);
-	background-size: 7px 7px;
 	color: var(--ink);
 	font-family: var(--sans);
 	font-size: 1rem;
